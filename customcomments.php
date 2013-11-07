@@ -97,7 +97,7 @@ function Forum_GetNumPostsInThread($threadID = null, $Display = false)
 ***********************************************************************/
 function Forum_AddWPPost($WP_ID)  {
    global $wp_query , $boardID;
-   $posterInfo = "Autos_Editor";
+   $posterInfo = "CD_Editor";
    $PostTitle = $wp_query->post->post_title;
    $PostContent = $wp_query->post->post_excerpt;
    $PostLink =  get_permalink($WP_ID);
@@ -108,13 +108,15 @@ function Forum_AddWPPost($WP_ID)  {
    $PostData =  preg_replace("/[\xE2]/", "\'", $PostData);
    $PostData =  preg_replace("/[^\x9\xA\xD\x20-\x7F]/", "", $PostData);
    $PostData =  strip_tags($PostData,'<img>');
-   $PostData =  $PostData . '<br>[url=' . $PostLink . ']Read More...[/url]';
+   $PostData = '<div style="text-align:left">' . $PostData . '<br><a href=' . $PostLink . '>Read More...</a></div>';
 
    // Before we do anything else let's check which category this post is in.  If it is expected to be different from the default change board.
    // NOTE: Change this if you would like to post to different boards based on what category the blog posting is in.
+   /*
      if (in_category( array("general-news","auto-shows") )) {
         $boardID = '19591'; // post in my news board instead
     }
+   */
 
    // Just before adding the topic again, let's double check to make sure that it doesn't exist... just in case
    $CheckForumID = get_post_meta($wp_query->post->ID,forumid);
